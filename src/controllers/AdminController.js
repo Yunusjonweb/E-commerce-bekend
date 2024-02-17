@@ -2,6 +2,9 @@ const categories = require("../model/CategoryModel");
 const users = require("../model/UserModel");
 const CategoryValidation = require("../validations/CategoryValidation");
 const { v4 } = require("uuid");
+const products = require("../model/ProductsModel");
+const ProductValidation = require("../validations/ProductValidation");
+const slugify = require("slugify");
 
 module.exports = class AdminController {
   static async UsersGET(req, res) {
@@ -134,6 +137,89 @@ module.exports = class AdminController {
         ok: true,
         message: "Category updated",
         category: category,
+      });
+    } catch (e) {
+      res.status(404).json({
+        ok: false,
+        message: e + "",
+      });
+    }
+  }
+
+  static async CategoryDELETE(req, res) {
+    try {
+      const { category_id } = req.params;
+
+      await categories.deleteOne({
+        category_id,
+      });
+
+      res.status(200).json({
+        ok: true,
+        message: "Category deleted",
+      });
+    } catch (e) {
+      res.status(404).json({
+        ok: false,
+        message: e + "",
+      });
+    }
+  }
+
+  static async ProductsGET(req, res) {
+    try {
+      let { c_page, p_page } = req.query;
+
+      c_page = c_page || 1;
+      p_page = p_page || 10;
+
+      let productList = await products
+        .find()
+        .skip(p_page * (c_page - 1))
+        .limit(p_page);
+
+      res.status(200).json({
+        ok: true,
+        products: productList,
+      });
+    } catch (e) {
+      res.status(404).json({
+        ok: false,
+        message: e + "",
+      });
+    }
+  }
+
+  static async ProductsPOST(req, res) {
+    try {
+      const { category_id } = req.params;
+      const { product_name, price, description } = await ProductValidation(
+        req.body
+      );
+      let slug = slugify(product_name.toLowerCase());
+
+      let product = await products.findOne({ slug, category_id });
+
+      if (product) throw new Error(`Product slug ${slug} already exsistes`);
+
+      let category = await categories.findOne({
+        category_id,
+      });
+
+      if (!category) throw new Error("Category not found");
+
+      product = await products.create({
+        product_id: v4(),
+        product_name,
+        price,
+        product_slug: slug,
+        category_id,
+        description,
+      });
+
+      res.status(201).json({
+        ok: true,
+        product,
       });
     } catch (e) {
       res.status(404).json({
