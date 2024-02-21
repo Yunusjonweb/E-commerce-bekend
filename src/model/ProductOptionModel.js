@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 let ProductOptionSchema = new mongoose.Schema({
   product_option_id: {
-    type: Number,
+    type: String,
     required: true,
     unique: true,
   },
@@ -15,7 +15,7 @@ let ProductOptionSchema = new mongoose.Schema({
     required: true,
   },
   product_id: {
-    type: Number,
+    type: String,
     required: true,
     unique: true,
   },

@@ -7,7 +7,12 @@ const {
   CategoryPATCH,
   CategoryDELETE,
   ProductsGET,
-  ProductsPOST,
+  ProductPOST,
+  ProductPATCH,
+  ProductDELETE,
+  ProductFilterGET,
+  ProductOptionPOST,
+  ProductBestSellerPATCH,
 } = require("../controllers/AdminController");
 const AdminMiddleware = require("../middlewares/AdminMiddleware");
 
@@ -25,7 +30,20 @@ router.delete(
   CategoryDELETE
 );
 router.get("/products", AdminMiddleware, ProductsGET);
-router.post("/products/create/:category_id", AdminMiddleware, ProductsPOST);
+router.post("/products/create/:category_id", AdminMiddleware, ProductPOST);
+router.post(
+  "/products/option/create/:product_id",
+  AdminMiddleware,
+  ProductOptionPOST
+);
+router.get("/products/filter/:category_id", AdminMiddleware, ProductFilterGET);
+router.patch("/products/update/:product_id", AdminMiddleware, ProductPATCH);
+router.delete("/products/delete/:product_id", AdminMiddleware, ProductDELETE);
+router.patch(
+  "/products/type/:product_id",
+  AdminMiddleware,
+  ProductBestSellerPATCH
+);
 
 module.exports = {
   path: "/admin",
