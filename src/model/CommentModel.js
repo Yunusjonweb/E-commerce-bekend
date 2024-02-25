@@ -11,18 +11,18 @@ let CommentSchema = new mongoose.Schema({
     required: true,
   },
   star: {
-    type: Number,
+    type: String,
     required: true,
     min: 1,
     max: 5,
   },
   product_id: {
-    type: Number,
+    type: String,
     required: true,
     unique: true,
   },
   user_id: {
-    type: Number,
+    type: String,
     required: true,
     unique: true,
   },

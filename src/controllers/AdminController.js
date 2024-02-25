@@ -434,12 +434,12 @@ module.exports = class AdminController {
   static async ProductBestSellerPATCH(req, res) {
     try {
       let { type, cond } = req.query;
-      const { product_id } = req.body;
+      const { product_id } = req.params;
       if (type !== "rec" && type !== "best") {
         throw new Error("Type must be 'rec' or 'best'");
       }
 
-      if (cond !== "false" && cond !== "true") {
+      if (cond != "false" && cond != "true") {
         throw new Error("Conditions must be 'true' or 'false'");
       }
 

@@ -13,11 +13,11 @@ let CartSchema = new mongoose.Schema({
     min: 1,
   },
   product_id: {
-    type: Number,
+    type: String,
     required: true,
   },
   user_id: {
-    type: Number,
+    type: String,
     required: true,
   },
 });
