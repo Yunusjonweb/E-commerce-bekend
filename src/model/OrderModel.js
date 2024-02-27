@@ -7,12 +7,37 @@ let OrderSchema = new mongoose.Schema({
     unique: true,
   },
   user_id: {
-    type: Number,
+    type: String,
     required: true,
   },
   time: {
     type: Date,
     required: true,
+  },
+  full_name: {
+    type: String,
+    required: true,
+  },
+  shopping_region: {
+    type: String,
+    required: true,
+  },
+  shopping_address: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: Number,
+    required: true,
+  },
+  comment: {
+    type: String,
+    required: true,
+  },
+  status: {
+    type: String,
+    required: true,
+    default: "Payed",
   },
 });
 

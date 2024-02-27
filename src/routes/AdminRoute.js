@@ -14,6 +14,7 @@ const {
   ProductOptionPOST,
   ProductBestSellerPATCH,
 } = require("../controllers/AdminController");
+const { OrderPATCH } = require("../controllers/ProductController");
 const AdminMiddleware = require("../middlewares/AdminMiddleware");
 
 const router = require("express").Router();
@@ -44,6 +45,7 @@ router.patch(
   AdminMiddleware,
   ProductBestSellerPATCH
 );
+router.patch("/order/:order_id", AdminMiddleware, OrderPATCH);
 
 module.exports = {
   path: "/admin",

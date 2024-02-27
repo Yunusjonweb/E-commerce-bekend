@@ -8,6 +8,11 @@ const {
   CartGET,
   ProductGET,
   CommentPOST,
+  CommentDisLikeDELETE,
+  CommentLikePOST,
+  CommentLikeDELETE,
+  CommentDisLikePOST,
+  OrderPOST,
 } = require("../controllers/ProductController");
 const AuthMiddleware = require("../middlewares/AuthMiddleware");
 
@@ -27,6 +32,16 @@ router.patch(
   AuthMiddleware,
   CartMinusPATCH
 );
+
+router.post("/comment/like/:comment_id", AuthMiddleware, CommentLikePOST);
+router.post("/comment/dislike/:comment_id", AuthMiddleware, CommentDisLikePOST);
+router.delete("/comment/like/:comment_id", AuthMiddleware, CommentLikeDELETE);
+router.delete(
+  "/comment/like/:comment_id",
+  AuthMiddleware,
+  CommentDisLikeDELETE
+);
+router.post("/order", AuthMiddleware, OrderPOST);
 
 module.exports = {
   path: "/",

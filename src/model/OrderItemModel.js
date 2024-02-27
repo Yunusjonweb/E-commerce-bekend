@@ -7,15 +7,15 @@ let OrderItemSchema = new mongoose.Schema({
     unique: true,
   },
   product_id: {
-    type: Number,
+    type: String,
     required: true,
   },
   count: {
     type: Number,
     required: true,
-  },
+  },  
   order_id: {
-    type: Number,
+    type: String,
     required: true,
   },
 });
